@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Realistic Stock Market Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f1f5f9;
+      color: #1e293b;
+    }
+
+    header {
+      background-color: #0f172a;
+      color: white;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    header span {
+      font-size: 14px;
+      opacity: 0.8;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 20px;
+      padding: 30px 40px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+    }
+
+    .stock-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .stock-table th, .stock-table td {
+      padding: 10px 12px;
+      text-align: left;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .stock-table th {
+      background-color: #f8fafc;
+      color: #475569;
+    }
+
+    .status-green {
+      color: green;
+      font-weight: bold;
+    }
+
+    .status-red {
+      color: red;
+      font-weight: bold;
+    }
+
+    .chart-container {
+      position: relative;
+      height: 300px;
+      margin-top: 20px;
+    }
+
+    .notification {
+      background-color: #e0f2fe;
+      color: #0369a1;
+      padding: 10px;
+      margin-bottom: 20px;
+      border-left: 4px solid #0284c7;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    footer {
+      text-align: center;
+      background-color: #1e293b;
+      color: white;
+      padding: 15px;
+      margin-top: 30px;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>📊 Stock Market Dashboard</h1>
+  <span id="dateTime"></span>
+</header>
+
+<div class="container">
+  <!-- Left: Portfolio Summary -->
+  <div class="card">
+    <h2>Portfolio Overview</h2>
+    <p><strong>Total Value:</strong> ₹1,45,200</p>
+    <p><strong>Invested Amount:</strong> ₹1,20,000</p>
+    <p><strong>Profit/Loss:</strong> <span class="status-green">+₹25,200</span></p>
+
+    <div class="notification">
+      🔔 Infosys has increased by 1.5% today. Consider reviewing your holdings.
+    </div>
+
+    <h3>Holdings</h3>
+    <ul>
+      <li>Reliance - 10 Shares @ ₹2,750</li>
+      <li>Infosys - 20 Shares @ ₹1,480</li>
+      <li>TCS - 8 Shares @ ₹3,250</li>
+    </ul>
+  </div>
+
+  <!-- Right: Live Stocks and Chart -->
+  <div class="card">
+    <h2>Live Stock Prices</h2>
+    <table class="stock-table" id="stockTable">
+      <thead>
+        <tr>
+          <th>Company</th>
+          <th>Price</th>
+          <th>Change</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Reliance</td>
+          <td>₹2,755</td>
+          <td class="status-green">+0.5%</td>
+        </tr>
+        <tr>
+          <td>Infosys</td>
+          <td>₹1,495</td>
+          <td class="status-green">+1.5%</td>
+        </tr>
+        <tr>
+          <td>TCS</td>
+          <td>₹3,240</td>
+          <td class="status-red">-0.3%</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="chart-container">
+      <canvas id="performanceChart"></canvas>
+    </div>
+  </div>
+</div>
+
+<footer>
+  &copy; 2025 StockSim | Built for Simulation & Learning
+</footer>
+
+<script>
+  // Date & Time Update
+  const updateTime = () => {
+    const now = new Date();
+    document.getElementById('dateTime').textContent = now.toLocaleString();
+  };
+  updateTime();
+  setInterval(updateTime, 1000);
+
+  // Simulated Chart.js Portfolio Chart
+  const ctx = document.getElementById('performanceChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+      datasets: [{
+        label: 'Portfolio Value (₹)',
+        data: [120000, 125000, 123000, 130000, 145200],
+        borderColor: '#0284c7',
+        backgroundColor: 'rgba(2, 132, 199, 0.1)',
+        fill: true,
+        tension: 0.3,
+        pointRadius: 4,
+        pointBackgroundColor: '#0284c7',
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false }
+      },
+      scales: {
+        y: {
+          beginAtZero: false,
+          ticks: { callback: value => `₹${value}` }
+        }
+      }
+    }
+  });
+</script>
+
+</body>
+</html>
+<!-- Trigger rebuild -->
