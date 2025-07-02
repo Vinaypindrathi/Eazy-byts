@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EventHub - Login</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <nav>
+    <h1>EventHub</h1>
+  </nav>
+  <main>
+    <h2>Login to Your Account</h2>
+    <form onsubmit="loginUser(event)" class="form">
+      <input type="email" id="loginEmail" placeholder="Email" required />
+      <input type="password" id="loginPassword" placeholder="Password" required />
+      <button type="submit">Login</button>
+    </form>
+    <p>New user? <a href="register.html">Register here</a></p>
+  </main>
+  <footer>
+    <p>&copy; 2025 EventHub. All rights reserved.</p>
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>
